@@ -1,0 +1,45 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.linuxgods.kreiger.intellij.idea.har-file-support</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>HAR (HTTP Archive) Support</name>
+    
+    <version>0.0.1</version>
+    <idea-version since-build="223"/>
+    
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="christoffer.hammarstrom@gmail.com">Christoffer Hammarström</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    The HTTP Archive (HAR) format defines an archival format for HTTP transactions
+    that can be used by a web browser to export detailed performance data about web pages it loads.
+    ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="HAR" language="HAR" fieldName="INSTANCE" extensions="har"
+                  implementationClass="com.linuxgods.kreiger.intellij.idea.har.HarFileType"/>
+        <lang.parserDefinition language="HAR"
+                implementationClass="com.linuxgods.kreiger.intellij.idea.har.HarParserDefinition" />
+        <lang.foldingBuilder language="HAR"
+                             implementationClass="com.linuxgods.kreiger.intellij.idea.har.HarFoldingBuilder" />
+        <localInspection language="HAR" shortName="HarContent"
+                         displayName="HAR content" groupName="HTTP Archive (HAR)"
+                         enabledByDefault="true" level="WARNING"
+                         implementationClass="com.linuxgods.kreiger.intellij.idea.har.HarContentInspection"/>
+        <languageInjectionContributor
+                language="JSON"
+                implementationClass="com.linuxgods.kreiger.intellij.idea.har.HarLanguageInjectionContributor" />
+    </extensions>
+</idea-plugin>
